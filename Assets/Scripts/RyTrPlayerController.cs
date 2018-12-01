@@ -13,12 +13,13 @@ public class RyTrPlayerController : MonoBehaviour
     private int count;
     public int wholetime;
     public bool isAlive;
-    public Text SurviveText;
     public Text endText;
+    bool hazardHit = true;
+    private bool facingRight = true;
 
 
     public Text CollectText;
-
+    public Text loseText;
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -32,54 +33,78 @@ public class RyTrPlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        rb2d.velocity = new Vector2(moveHorizontal * speed, rb2d.velocity.y);
+   
+
+            float moveHorizontal = Input.GetAxis("Horizontal");
+
+      
+
+            rb2d.velocity = new Vector2(moveHorizontal * speed, rb2d.velocity.y);
+
+        if (facingRight == false && moveHorizontal > 0)
+        {
+            Flip();
+        }
+        else if (facingRight == true && moveHorizontal < 0)
+        {
+            Flip();
+        }
+
 
         if (timer > 0 && isAlive == true)
         {
             timer = timer - Time.deltaTime;
         }
-        
+
         else if (timer <= 0 || isAlive == false)
         {
-            
+
             int wholeTime = (int)timer;
 
             endText.text = "You saved the fossil!";
-
-            GameObject.active = false;
+            anim.SetBool("Fin", true);
 
             RyTrGameLoader.AddScore(wholeTime);
 
             StartCoroutine(ByeAfterDelay(2));
-
         }
-
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
 
-            RyTrGameLoader.AddScore(1);
+        if (collision.collider.tag == "Hazard")
+        {
+            endText.text = "You have failed!";
+        }
 
+        
     }
 
-            private void Update()
+
+private void Update()
+    { 
+if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+
+        {
+            anim.SetBool("isTilting", true);
+        }
+        else
+        {
+            anim.SetBool("isTilting", false);
+        }
+    }
+
+
+
+    void Flip()
     {
-        Vector3 characterScale = transform.localScale;
-        if (Input.GetAxis("Horizontal") < 0)
-        {
-            characterScale.x = -1;
-        }
-
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            characterScale.x = 1;
-        }
-
-        transform.localScale = characterScale;
-
+        facingRight = !facingRight;
+        Vector2 Scaler = transform.localScale;
+        Scaler.x = Scaler.x * -1;
+        transform.localScale = Scaler;
     }
+
 
     IEnumerator ByeAfterDelay(float time)
     {
