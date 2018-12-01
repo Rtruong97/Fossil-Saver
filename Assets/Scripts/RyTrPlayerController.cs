@@ -16,7 +16,7 @@ public class RyTrPlayerController : MonoBehaviour
     public Text endText;
     bool hazardHit = true;
     private bool facingRight = true;
-
+    public AudioSource hit;
 
     public Text CollectText;
     public Text loseText;
@@ -77,8 +77,9 @@ public class RyTrPlayerController : MonoBehaviour
         {
             endText.text = "You lose!";
         }
+        hit.Play();
 
-        
+
     }
 
 
@@ -109,8 +110,6 @@ if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
     IEnumerator ByeAfterDelay(float time)
     {
         yield return new WaitForSeconds(time);
-
- 
         RyTrGameLoader.gameOn = false;
     }
 }
