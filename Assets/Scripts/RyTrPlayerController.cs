@@ -75,7 +75,7 @@ public class RyTrPlayerController : MonoBehaviour
 
         if (collision.collider.tag == "Hazard")
         {
-            endText.text = "You have failed!";
+            endText.text = "You lose!";
         }
 
         

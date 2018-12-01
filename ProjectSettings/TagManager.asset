@@ -44,7 +44,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Pillars
+  - name: Background
     uniqueID: 1287172081
     locked: 0
   - name: Floor
@@ -53,9 +53,9 @@ TagManager:
   - name: Icicles
     uniqueID: 2626779355
     locked: 0
-  - name: Snow
-    uniqueID: 2532774455
-    locked: 0
   - name: Player
     uniqueID: 2136931331
+    locked: 0
+  - name: Snow
+    uniqueID: 2532774455
     locked: 0
